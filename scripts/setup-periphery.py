@@ -118,21 +118,20 @@ def copy_service_file(home_dir, bin_dir, config_dir, service_dir, user_install):
 	# ensure service_dir exists
 	if not os.path.isdir(service_dir):
 		os.makedirs(service_dir)
-
-	f = open(service_file, "x")
-	f.write((
-		"[Unit]\n"
-		"Description=Agent to connect with Komodo Core\n"
-		"\n"
-		"[Service]\n"
-		f'Environment="HOME={home_dir}"\n'
-		f'ExecStart=/bin/sh -lc "{bin_dir}/periphery --config-path {config_dir}/periphery.config.toml"\n'
-		"Restart=on-failure\n"
-		"TimeoutStartSec=0\n"
-		"\n"
-		"[Install]\n"
-		"WantedBy=default.target"
-	))
+	with open(service_file, "x") as f:
+		f.write((
+			"[Unit]\n"
+			"Description=Agent to connect with Komodo Core\n"
+			"\n"
+			"[Service]\n"
+			f'Environment="HOME={home_dir}"\n'
+			f'ExecStart=/bin/sh -lc "{bin_dir}/periphery --config-path {config_dir}/periphery.config.toml"\n'
+			"Restart=on-failure\n"
+			"TimeoutStartSec=0\n"
+			"\n"
+			"[Install]\n"
+			"WantedBy=default.target"
+		))
 
 	user = ""
 	if user_install:
